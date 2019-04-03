@@ -1,0 +1,33 @@
+How theoretical?
+    - Not theoretical at all. Do something practical.
+
+How to justify?
+    - No need to explain the methods theoretically, just mention what you used and why.
+    - two to three sentences is enough
+
+R-codes? Do you need to include them?
+    - No, no need to write smart code, just make it work.
+    - All packages usable.
+
+Univariate and bivariate analysis?
+    - Univariate analysis: Focus on one type of data (e.g. unemployment rate in some countries), calculate means etc.
+    - Do not select data with a lot of variables, then you have to do univariate analysis to each of them.
+    - Bivariate analysis: Use to explore 2-by-2 dependencies in variables. (e.g. scatter plot by two interesting variables)
+    - Mosaic plot may be useful.
+    - R-plot cookbook
+
+How long?
+    - Range of length for max points is four to ten pages. Do not write more than ten.
+    - Use a cover page with name, student number and title.
+
+Where to get the data?
+    - Kaggle.com
+    - UN
+    - WHO
+    - DECD
+    - Statistics Finland (tilastokeskus)
+    - Finnish Cancer Registry
+    - Collect your own data
+
+Time-series data?
+    - Yes you may but it is way beyond the scope of this course.
