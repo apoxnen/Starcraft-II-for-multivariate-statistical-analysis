@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{adjustbox}
+
+\title{Starcraft II for Multivariate Statistical Analysis}
+\author{Ari-Pekka Härkönen}
+\date{April 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+INCLUDE GENERAL DESCRIPTION OF SC2 HERE.
+
+The research questions I decided to tackle in my project are related to predicting how well a Starcraft II player's ranking can be predicted by analyzing the in-game statistics from their recorded games. More specifically, the research questions considered are:
+
+\begin{itemize}
+    \item What are the significant predictors of a player's league?
+    \item Which variables of the in-game dataset provide the best clues for in which league a player is?
+    \item How accurately can a players league be predicted by performing analysis on this dataset?
+\end{itemize}
+
+Additionally, the focus is on variables that are observable during the game, meaning that anyone with knowledge of the basic dynamics of the game should be able to use the conclusions of this analysis while watching a competitive game of Starcraft II to have a prediction for in which league the players are.
+
+\subsection{Dataset}
+The dataset used in this statistical analysis is Starcraft II Replay Analysis found in Kaggle (\url{https://www.kaggle.com/sfu-summit/starcraft-ii-replay-analysis}). The original dataset contains observations from 3395 Starcraft II games with 21 variables describing the player behaviour. For the analysis performed here, we focus on a subset of X variables. The two main reasons for this are firstly the redundancy of some of the variables included in the set, the variables that are left out of this analysis measure behavior only visible to the player alone and using those to predict a player's success in the game is impossible as the data is not accessible until after the game. The second reason for the exclusion of some of the variables is that they do not clearly relate to a player's success or they are already presented by other variables in the dataset. As an example, analyzing the duration of individual games is not considered. Although including it could provide some funny correlations, it is clear that the duration of the game is only a clear measure of someone's skill in the case that the opponent is considerably less skilled in the game.
+
+Below are introduced the variables included in this analysis. The decision of which variables from the original dataset are included and which are left out is based on my excessive knowledge of the game gained over years of trying to get out of Bronze league.
+
+\begin{table}[]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{ |c|c|c| } 
+        \hline
+        Variable & Definition & Format \\ 
+        \hline
+        League & The basic measure for how good a player is in competitive Starcraft. By playing well enough, a player can advance to the next league. & 1-8 for Bronze, Silver, Gold, Diamond, Master, GrandMaster, Professional leagues \\ \hline
+        APM & Actions per minute. A measure used in RTS-games, that corresponds with how many actions (clicks, or button presses) a player performs  & Integer \\ \hline
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
+
+include the main hypothesis here....
+
+FROM SLIDES OF LECTURE 1:
+• Description of the research questions
+• Description of the dataset
+• Univariate and bivariate statistical analysis to present the
+variables
+• Application of multivariate statistical methods to answer
+research questions (justification and output)
+• Conclusions and answers to the question raised at the
+beginning
+• Critical evaluation of the analysis
+\end{document}
