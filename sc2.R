@@ -16,9 +16,8 @@ unique(D[,3])
 # 3 => 30 - 60
 # 4 => 60 - 90
 # 5 => 90 - 200
-D$HoursPerWeek = cut(data$HoursPerWeek,c(0,10,30,60,90,200))
-levels(D$HoursPerWeek) = c("0-10","11-30","31-60","61-90",">90")
-hist(D$HoursPerWeek)
+D$HoursPerWeek_bins = cut(data$HoursPerWeek,c(0,10,30,60,90,200))
+levels(D$HoursPerWeek_bins) = c("0-10","11-30","31-60","61-90",">90")
 
 #Unique values in APM
 (unique(D[,5]))
@@ -35,27 +34,55 @@ complex_units <- D$ComplexUnitsMade * D$MaxTimeStamp
 # 4 => 250 - 350
 # 5 => 350 - 500
 
-D$APM = cut(data$APM,c(0,50,100,200,300,500))
-levels(D$APM) = c("0-50","50-100","100-200","200-300",">300")
-hist(D$APM)
-
-table(D$APM)
-# Based on this the bins should focus more on the lower end
+D$APM_bins = cut(data$APM,c(0,50,100,200,300,500))
+levels(D$APM_bins) = c("0-50","50-100","100-200","200-300",">300")
 
 
 #PCA
 pca_cols <- D[c(1,3,5)]
 D.pca <- princomp(data, cor=FALSE)
 
-# MCA
-library(ca)
-D.mca <- mjca(pca_cols,lambda="indicator")
-summary(D.mca)
+# Univariate analysis of included variables:
 
-plot(D.mca, arrows=c(T,T), title("MCA")) # MCA performed on league, APM and hours played by week
+# League
+label <- c("Bronze", "Silver", "Gold", "Diamond", "Master", "GrandMaster", "semi-professional", "professional")
+cols <- c("burlywood", "azure2", "gold", "deeppink", "red", "orange", "purple", "cyan")
+hist(D$LeagueIndex, breaks = 9, col=cols, labels=label, xlab = "League", xaxt="n",
+     main = "Histogram of leagues")
 
-test_data <- D[c(1,5,6,10)]
-test_data.mca <- mjca(test_data, lambda="indicator")
-summary(test_data.mca)
+# APM boxplot in relation to league
+library(ggplot2)
+league_apm <- D[c(1,5)]
+boxplot(data$LeagueIndex, data$APM, col = cols)
 
-plot(test_data.mca, arrows=c(T,T), title("MCA")) # MCA performed on league, APM and TotalMapExp and complex ability used
+boxplot(data$APM~data$LeagueIndex,
+        data=data,
+        main="Boxplot of APMs for each league",
+        xlab="League",
+        ylab="APM",
+        col=cols,
+        border="brown",
+        names=label
+)
+
+
+#WORKING ANALYSIS:
+
+# Clustering
+cluster_vars <- data[c(2,6,16)]
+# Create labels for each league
+#Scatterplot:
+plot(cluster_vars, panel = function(x,y) {text(x,y,labels=label,xpd=T)})
+
+#K-means
+library(cluster)
+
+set.seed(100) #500 yields nicely differing results for 3 centers
+k.mean <- kmeans(cluster_vars[,-1],centers=length(label))
+table(k.mean$cluster,cluster_vars[,-1])
+# zero wrong ones in the 1st category
+# 95 right ones in the 2nd category
+
+clusplot(cluster_vars[,-1],k.mean$cluster,color=T,shade=T)
+plot(cluster_vars[,-1], col=k.mean$cluster, pch=16)  # Perhaps just using the standard plot() is simpler
+
