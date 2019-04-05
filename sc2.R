@@ -83,6 +83,22 @@ table(k.mean$cluster,cluster_vars[,-1])
 # zero wrong ones in the 1st category
 # 95 right ones in the 2nd category
 
+# League colors to cluster_vars
+n <- nrow(cluster_vars)
+
+cols <- rep(NA,n)
+cols[cluster_vars$LeagueIndex == 1] <- "burlywood"
+cols[cluster_vars$LeagueIndex == 2] <- "azure2"
+cols[cluster_vars$LeagueIndex == 3] <- "gold"
+cols[cluster_vars$LeagueIndex == 4] <- "deeppink"
+cols[cluster_vars$LeagueIndex == 5] <- "red"
+cols[cluster_vars$LeagueIndex == 6] <- "orange"
+cols[cluster_vars$LeagueIndex == 7] <- "purple"
+cols[cluster_vars$LeagueIndex == 8] <- "cyan"
+
+
+
+
 clusplot(cluster_vars[,-1],k.mean$cluster,color=T,shade=T)
-plot(cluster_vars[,-1], col=k.mean$cluster, pch=16)  # Perhaps just using the standard plot() is simpler
+plot(cluster_vars[,-1], col=cols, pch=16)  # Perhaps just using the standard plot() is simpler
 
