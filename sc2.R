@@ -64,8 +64,6 @@ boxplot(dataset$ComplexAbilityUsed~dataset$LeagueIndex,
 )
 
 
-#WORKING ANALYSIS:
-
 # Clustering
 cluster_vars <- dataset
 # Create labels for each league
@@ -75,11 +73,9 @@ plot(cluster_vars, panel = function(x,y) {text(x,y,labels=label,xpd=T)})
 #K-means
 library(cluster)
 
-set.seed(100) #500 yields nicely differing results for 3 centers
+set.seed(5000) #100 and 5000
 k.mean <- kmeans(cluster_vars[,-1],centers=length(label))
 table(k.mean$cluster,cluster_vars[,-1])
-# zero wrong ones in the 1st category
-# 95 right ones in the 2nd category
 
 # League colors to cluster_vars
 n <- nrow(cluster_vars)
@@ -97,60 +93,5 @@ cols[cluster_vars$LeagueIndex == 8] <- "cyan"
 
 
 
-clusplot(cluster_vars[,-1],k.mean$cluster,main="Clustering to leagues",color=T,shade=T)
+clusplot(cluster_vars[,-1],k.mean$cluster,main="Clustering to leagues",color=T,shade=T, labels=)
 plot(cluster_vars[,1], col=cols, pch=16)  # Perhaps just using the standard plot() is simpler
-
-
-# PCA on dataset
-plot(dataset)
-
-pca_dataset <- cbind(dataset, data[21])
-pca_dataset$APM <- pca_dataset$APM / pca_dataset$MaxTimeStamp
-
-dataset.pca <- princomp(dataset[,-1],cor=FALSE)
-summary(dataset.pca)
-plot(dataset.pca)
-
-
-
-
-# Clustering 2
-cluster_vars2 <- data[c(2,6,5)]
-#remove NA:
-cluster_vars2 <- cluster_vars2[complete.cases(cluster_vars2), ]
-#Remove outlier:
-cluster_vars2 <- cluster_vars2[-1793,]
-cluster_vars2 <- cluster_vars2[-1794,]
-
-# Create labels for each league
-#Scatterplot:
-plot(cluster_vars2, panel = function(x,y) {text(x,y,labels=label,xpd=T)})
-
-#K-means
-library(cluster)
-
-set.seed(100) #500 yields nicely differing results for 3 centers
-k.mean <- kmeans(cluster_vars2[,-1],centers=length(label))
-table(k.mean$cluster,cluster_vars[,-1])
-# zero wrong ones in the 1st category
-# 95 right ones in the 2nd category
-
-# League colors to cluster_vars
-n <- nrow(cluster_vars2)
-
-cols <- rep(NA,n)
-cols[cluster_vars2$LeagueIndex == 1] <- "burlywood"
-cols[cluster_vars2$LeagueIndex == 2] <- "azure2"
-cols[cluster_vars2$LeagueIndex == 3] <- "gold"
-cols[cluster_vars2$LeagueIndex == 4] <- "deeppink"
-cols[cluster_vars2$LeagueIndex == 5] <- "red"
-cols[cluster_vars2$LeagueIndex == 6] <- "orange"
-cols[cluster_vars2$LeagueIndex == 7] <- "purple"
-cols[cluster_vars2$LeagueIndex == 8] <- "cyan"
-
-
-
-
-clusplot(cluster_vars2[,-1],k.mean$cluster,color=T,shade=T)
-plot(cluster_vars2[,-1], col=cols, pch=16)  # Perhaps just using the standard plot() is simpler
-
